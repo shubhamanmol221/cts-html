@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CTS-2025</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f9ff;
+            color: #2e7d32;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            padding: 10px 30px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin: 0;
+        }
+
+        .main-title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .main-title-container img {
+            height: 70px;
+        }
+
+        .main-title-container h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .paper {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            text-align: left;
+            gap: 30px;
+        }
+
+        .paper-image {
+            width: 300px;
+            min-width: 300px;
+            max-width: 300px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .paper .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .paper h2 {
+            font-size: 1.5em;
+            color: #2e7d32;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tag-image {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .paper .authors {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .paper .abstract {
+            font-size: 1em;
+            color: #333;
+            max-width: 800px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .info-section h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .info-section p {
+            margin: 6px 0;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        footer {
+            background-color: white;
+            color: #2e7d32;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        .topic-image {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .paper.info-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        /* --- Slideshow Styles --- */
+        .slideshow-container {
+            max-width: 1100px;
+            position: relative;
+            margin: 30px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .slides-wrapper {
+            display: flex;
+            transition: transform 0.7s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .slide img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* Next & previous buttons */
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.3s ease;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Position the "previous button" to the left */
+        .prev {
+            left: 0;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+
+        @media (max-width: 768px) {
+            .main-title-container h1 {
+                font-size: 2em;
+            }
+
+            .main-title-container img {
+                height: 50px;
+            }
+
+            .paper {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+
+            .paper-image {
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 10px;
+            }
+
+            .speakers-grid {
+                max-width: 100% !important;
+            }
+        }
+        
+        /* --- Speaker Section --- */
+        .speakers-section {
+            padding: 20px 0 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .speakers-section h2 {
+            margin-bottom: 25px;
+            color: #2e7d32;
+            font-size: 1.7em;
+            letter-spacing: 1px;
+        }
+
+        .speakers-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 10px 20px;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .speaker-card {
+            flex: 1 1 280px;
+            max-width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .speaker-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .speaker-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid #2e7d32;
+        }
+
+        .speaker-name {
+            font-size: 1.25em;
+            color: #2e7d32;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .speaker-info {
+            font-size: 1em;
+            color: #555;
+            text-align: center;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-title-container">
+        <img src="CTS 2025 logo copy.png" alt="Candela Tech Summit Main Logo">
+        <h1>Candela Technology Summit 2025</h1>
+    </div>
+
+    <div class="slideshow-container">
+        <div class="slides-wrapper">
+            <div class="slide">
+                <img src="CTS 2025 Banner.jpg" alt="Candela Tech Summit 2025 Banner">
+            </div>
+            <div class="slide">
+                 <img src="event-1.jpg" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img src="event-2.jpg" alt="Slide 3">
+            </div>
+            <!-- <div class="slide">
+                <img src="event-3.jpg" alt="Slide 4">
+            </div> -->
+            <!-- <div class="slide">
+                <img src="event-4.jpg" alt="Slide 5">
+            </div>
+            <div class="slide">
+                <img src="event-5.jpg" alt="Slide 5">
+            </div> -->
+        </div>
+        <a class="prev">❮</a>
+        <a class="next">❯</a>
+    </div>
+
+    <div class="speakers-section">
+        <h2>Guest Speakers</h2>
+        <div class="speakers-grid">
+            <div class="speaker-card">
+                <img src="https://via.placeholder.com/120x120?text=Srikanth" alt="Srikanth">
+                <div class="speaker-name">Dr. Srikanth</div>
+                <div class="speaker-info">802.11 PHY Evolution</div>
+            </div>
+            <div class="speaker-card">
+                <img src="https://via.placeholder.com/120x120?text=Vardhan" alt="Vardhan">
+                <div class="speaker-name">Susinder Gulasekaran</div>
+                <div class="speaker-info">Candela Assist</div>
+            </div>
+            <div class="speaker-card">
+                <img src="https://via.placeholder.com/120x120?text=Siva" alt="Siva">
+                <div class="speaker-name">Shivam Thakur</div>
+                <div class="speaker-info">Candela Assist</div>
+            </div>
+            <div class="speaker-card">
+                <img src="https://via.placeholder.com/120x120?text=Sahithi" alt="Sahithi">
+                <div class="speaker-name">Rasika</div>
+                <div class="speaker-info">Candela Assist</div>
+            </div>
+            <div class="speaker-card">
+                <img src="https://via.placeholder.com/120x120?text=Sai+Kiran" alt="Sai Kiran">
+                <div class="speaker-name">Shashank</div>
+                <div class="speaker-info">Adaptive DFS</div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div>
+            <h1>Topics</h1>
+            <img src="https://via.placeholder.com/600x300?text=Topics+Image" alt="Topics Image" class="topic-image">
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=802.11+PHY+Image" alt="802.11 PHY evolution Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">802.11 PHY
+                    evolution; hits and misses</h2>
+                <div class="authors">By Srikanth</div>
+                <div class="abstract">The WiFi success story has been built on evolving 802.11 standards adding higher
+                    speeds and other features. In the PHY evolution, crucial technologies like OFDM, MIMO, higher-order
+                    QAM, OFDMA, MU-MIMO etc. have been standardized to move the technology to achieve greater speeds
+                    amongst other benefits. In this talk we will talk about what has clicked with respect to practice
+                    and some which have not worked well in practice. This will give an insight into the crucial
+                    technologies behind the success of WiFi.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=Candela+Assist+Image" alt="Candela Assist Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Built for
+                    Engineers. Driven by AI. Introducing Candela Assist</h2>
+                <div class="authors">By Vardhan, Siva & Sahithi</div>
+                <div class="abstract">Candela Assist is an advanced, AI-powered platform designed to streamline wireless
+                    testing workflows. It integrates natural language understanding, automation, and visualization tools
+                    to empower engineers to design and validate Wi-Fi networks more efficiently.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=Adaptive+DFS+Image" alt="Adaptive DFS Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Enhancing Channel
+                    Selection with Adaptive DFS</h2>
+                <div class="authors">By Sai Kiran</div>
+                <div class="abstract">The objective of this presentation is to provide insight into how adaptive Dynamic
+                    Frequency Selection (DFS) can optimize channel selection by minimizing radar interference while
+                    maintaining performance in Wi-Fi networks.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=Seamless+Switchover+Image"
+                alt="Seamless Switchover Image" class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Seamless
+                    Switchover Between Wi-Fi and Cellular using Policy Engines</h2>
+                <div class="authors">By Manoj, Sirisha</div>
+                <div class="abstract">To evaluate the performance, reliability, and logic behind seamless transitions
+                    between Wi-Fi and 5G networks using programmable policy engines. This includes a demonstration of
+                    real-world testing scenarios and KPIs.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=Client+Behavior+Image" alt="Client Behavior Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Looking closer at
+                    the client: A deep dive into STA behavior</h2>
+                <div class="authors">By Sainath, Deepika</div>
+                <div class="abstract">Access point performance is often the primary focus during Wi-Fi testing, but
+                    understanding the client (STA) behavior is critical. This talk explores techniques to simulate and
+                    analyze various client-side conditions and reactions.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=Packet+to+Panel+Image" alt="Packet to Panel Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Packet to Panel:
+                    Real-Time Network Traffic Analysis Dashboard</h2>
+                <div class="authors">By Renusree, Nikitha</div>
+                <div class="abstract">Traditional analysis of WiFi performance issues is often manual and post-event.
+                    This project introduces a real-time dashboard that visualizes network traffic, latency spikes, and
+                    device-specific statistics, enabling live debugging.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=BLE+Interference+Image" alt="BLE Interference Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Evaluating Wi-Fi
+                    Performance Under BLE Interference Conditions</h2>
+                <div class="authors">By Yashwant, Manoj, Venu</div>
+                <div class="abstract">To evaluate and demonstrate the real-time impact of Bluetooth Low Energy (BLE)
+                    interference on Wi-Fi performance during active data transmission.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=6+GHz+Band+Image" alt="6 GHz Band Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Unlocking the
+                    Lower 6 GHz Band: A Leap Forward for Wi-Fi Innovation in India</h2>
+                <div class="authors">By Bhaskar, Yash, Madhan</div>
+                <div class="abstract">This presentation will introduce the unlicensed lower 6 GHz spectrum and its
+                    critical role in next-generation Wi-Fi. Then we'll examine the current licensed users of this band
+                    in India and summarize the main points of India's draft rules for the unlicensed lower 6 GHz
+                    spectrum. Next, we'll compare India's plan with those of other countries and discuss the pros and
+                    cons of allowing only low-power indoor devices versus higher-power outdoor use. We'll also explain
+                    why an Automated Frequency Coordination (AFC) system is essential for managing interference when
+                    Standard Power operation is permitted. Finally, we'll offer clear, practical recommendations to
+                    enable new unlicensed devices while protecting existing licensed services.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=Real-Device+Automation+Image"
+                alt="Real-Device Automation Image" class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Real-Device
+                    Automation in a Test House for Evaluating WiFi Router and AP</h2>
+                <div class="authors">By Akhil, Saurabh, Arif, Litin</div>
+                <div class="abstract">To make real device testing effortless, fast, and reliable through a single-click
+                    automation platform:
+                    <br>Allow users to run tests and configure devices with just one click, no complex setup required.
+                    <br>Enable easy selection of devices across Android, iOS, Windows, Mac, and Linux.
+                    <br>Provide real-time visual insights through an interactive dashboard that shows test progress,
+                    device status, and performance of your WiFi Router/Access Point across the Real devices.
+                    <br>Ensure consistent and accurate results, even when testing multiple devices at the same time.
+                </div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=MLO+in+the+Field+Image" alt="MLO in the Field Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">MLO in the Field:
+                    Insights into Legacy Devices and Roaming Behavior</h2>
+                <div class="authors">By Shymala, Kiranmai, Rajendra</div>
+                <div class="abstract">This study evaluates the real-world impact of Multi-Link Operation (MLO) on Wi-Fi
+                    roaming performance. A client device will be continuously roamed between two MLO-capable access
+                    points for one hour while running active traffic. Throughput, latency, and handoff behavior will be
+                    recorded to assess MLO’s ability to maintain performance during frequent transitions. The same test
+                    will then be repeated with MLO disabled on the AP. By comparing both scenarios under identical
+                    conditions, we aim to determine whether MLO improves roaming efficiency and throughput stability in
+                    dynamic enterprise environments.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=In-Flight+Wi-Fi+Image" alt="In-Flight Wi-Fi Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">In-Flight Wi-Fi:
+                    Systems, Challenges, and Test Scenarios</h2>
+                <div class="authors">By Pranathi, Veena</div>
+                <div class="abstract">As passenger expectations for in-flight connectivity grow, delivering stable and
+                    high-speed Wi-Fi at cruising altitudes has become both a technical challenge and a critical feature
+                    in modern aviation. This presentation begins with an overview of how in-flight connectivity works,
+                    tracing the end-to-end data flow between cabin devices, onboard systems, and ground or satellite
+                    networks.
+                    We dive into the communication protocols involved across flight phases—takeoff, cruise, and
+                    landing—with emphasis on handoffs and link transitions. Key physical factors like frequency bands,
+                    Doppler shifts, signal propagation at high velocities, and altitude-based constraints are analyzed
+                    for their impact on connectivity performance. This session also includes test scenarios validating
+                    the Wi-Fi performance in a flight with numerous clients connected at different distances from the
+                    access point and analyzes them.</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=WiFi+8+Image" alt="WiFi 8 Image" class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Inside WiFi 8:
+                    Exploring the Next Evolution of Wireless Standards</h2>
+                <div class="authors">By Amol, Raju</div>
+                <div class="abstract">To provide a clear and concise understanding of the upcoming WiFi 8 (IEEE
+                    802.11bn) standard,
+                    highlighting its key advancements, performance improvements, and strategic benefits for next
+                    generation wireless networks.
+                    The presentation will focus on how WiFi 8 will transform connectivity across enterprise, industrial,
+                    and consumer applications by delivering higher efficiency, lower latency, and AI/ML-assisted
+                    optimization—enabling future-ready use cases like real-time XR, massive IoT, edge cloud, and ultra
+                    reliable wireless networking</div>
+            </div>
+        </div>
+        <div class="paper">
+            <img src="https://via.placeholder.com/300x150?text=Switch+Testing+Image" alt="Switch Testing Image"
+                class="paper-image">
+            <div class="content">
+                <h2><img src="CTS logo png.png" alt="Tag" class="tag-image">Advanced Switch
+                    Testing Frameworks for OpenLAN Infrastructure.</h2>
+                <div class="authors">By Subhash, Mythri</div>
+                <div class="abstract">Traditional analysis of WiFi performance issues is often manual and post-event.
+                    This project introduces a real-time dashboard that visualizes network traffic, latency spikes, and
+                    device-specific statistics, enabling live debugging.</div>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+            <div class="paper info-section" style="flex: 1 1 300px; max-width: 500px;">
+                <h3 id="contact">Contact Information</h3>
+                <p><strong>Event Coordinator:</strong> Name</p>
+                <p><strong>Email:</strong> email@candelatech.com</p>
+                <p><strong>Phone:</strong> Mobile Number</p>
+            </div>
+
+            <div class="paper info-section" style="flex: 1 1 300px; max-width: 500px;">
+                <h3 id="venue">Venue</h3>
+                <p><strong>Location:</strong> <a href="https://maps.app.goo.gl/tjMYeZ2jNntqN59t7">SB Square Hotel &
+                        Banquet Visakhapatnam</a></p>
+                <p><strong>Date:</strong> 22nd August, 2025 (Friday)</p>
+                <p><strong>Time:</strong> 8:30 AM – 6:30 PM</p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        © 2025 CTS Event — Powered by Candela Technologies
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const slidesWrapper = document.querySelector(".slides-wrapper");
+            const slides = document.querySelectorAll(".slide");
+            const prevBtn = document.querySelector(".prev");
+            const nextBtn = document.querySelector(".next");
+
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+            const slideInterval = 5000; // 5 seconds
+            let slideTimer;
+
+            function updateSlidePosition() {
+                slidesWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            function showNextSlide() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateSlidePosition();
+            }
+
+            function showPrevSlide() {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateSlidePosition();
+            }
+
+            function startSlideShow() {
+                slideTimer = setInterval(showNextSlide, slideInterval);
+            }
+
+            function resetSlideShow() {
+                clearInterval(slideTimer);
+                startSlideShow();
+            }
+
+            nextBtn.addEventListener("click", () => {
+                showNextSlide();
+                resetSlideShow();
+            });
+
+            prevBtn.addEventListener("click", () => {
+                showPrevSlide();
+                resetSlideShow();
+            });
+
+            startSlideShow();
+        });
+    </script>
+
+</body>
+
+</html>
